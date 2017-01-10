@@ -1,0 +1,35 @@
+<!-- index.html-->
+{% extends "base.html" %}
+{% block title %}首頁{% endblock %}
+{% block content %}
+<div class='container' align=center>
+    {% for message in messages %}
+        <div class='alert alert-{{ message.tags }}'>{{message}}</div>
+    {% endfor %}
+    <h2>Welcome </h2>
+    {% if request.user.is_authenticated %}
+        <h3>Welcome {{username}}</h3>
+    {% else %}
+        <h3>請註冊或登入帳號</h3>
+    {% endif %}
+    <br>
+    <br>
+    <br>
+    <div class='row'>
+        {% for poll in polls %}
+            {% if forloop.first %}
+                <div class='list-group'>
+            {% endif %}
+            <a href='{% url "poll-url" poll.id %}' class='list-group-item'>{{poll.name}}</a>
+            {% if forloop.last %}
+                </div>
+            {% endif %}
+            {% empty %}
+                <center><h3>目前無活躍中投票項目</h3></center>
+        {% endfor %}
+        <div class='list-group'>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
